@@ -17,12 +17,18 @@ class TransactionsController < ApplicationController
     if user.money < params[:amount].to_i
       flash[:error] = "Insufficient funds."
     else
-      user.money -= params[:amount].to_i
       borrower = Borrower.find(params[:borrower])
+      user.money -= params[:amount].to_i
       borrower.raised += params[:amount].to_i
       user.save
       borrower.save
+      # transaction = Transaction.find_by_lender_id(session[:login])
+      # if transaction
+      #   amount = transaction.amount + params[:amount].to_i
+      #   transaction.update(amount: amount)
+      # else
       Transaction.create(amount: trans_amount, lender: user, borrower: borrower)
+      # end
     end
     redirect_to "/lending/#{session[:user]}/#{user.id}"
   end

@@ -9,7 +9,7 @@
     <form class="loginuser" action="/lending/login" method="post">
       <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
       <label for="email">Email: <input type="text" name="email" value=""></label><br>
-      <label for="password">Password: <input type="text" name="password" value=""></label><br>
+      <label for="password">Password: <input type="password" name="password" value=""></label><br>
       <a href="/lending/register">Click here to register</a>
       <input type="submit" name="submit" value="Log In">
     </form>
