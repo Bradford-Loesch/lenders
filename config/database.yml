@@ -1,0 +1,20 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: vagrant
+  # host: localhost
+  pool: 5
+
+development:
+  <<: *default
+  database: lenders_development
+
+test:
+  <<: *default
+  database: lenders_test
+
+production:
+  <<: *default
+  database: lenders_production
+  password: <%= ENV['LENDERS_DATABASE_PASSWORD'] %>

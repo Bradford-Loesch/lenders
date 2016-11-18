@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= session[:@user] %> Page</title>
+  </head>
+  <body>
+    <div class="header">
+      <div class="@userinfo">
+        <p>Name: <%= @user.first_name %> <%= @user.last_name %></p>
+        <% if session[:user] == 'lender' %>
+          <p>Account Balance: $<%= @user.money %></p>
+        <% elsif session[:user] == 'borrower' %>
+          <p>Amount Requested: $<%= @user.money %></p>
+          <p>Amount Raised: $<%= @user.raised %></p>
+        <% end %>
+      </div>
+      <a href="/lending/logout">Log Out</a>
+    </div>
+    <% if session[:user] == 'lender' %>
+      <h3>List of people in need of money:</h3>
+      <% if @needs %>
+        <table>
+          <thead>
+            <th>Name</th>
+            <th>Need Money for</th>
+            <th>Reason for Loan</th>
+            <th>Amount Needed</th>
+            <th>Amount Raised</th>
+            <th>Action</th>
+          </thead>
+          <% @needs.each do |need| %>
+            <tr>
+              <td><%= need.first_name %> <%= need.last_name %></td>
+              <td><%= need.purpose %></td>
+              <td><%= need.description %></td>
+              <td>$<%= need.money %></td>
+              <td>$<%= need.raised %></td>
+              <td>
+                <form class="lendaction" action="/lending/lend" method="post">
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+                  <input type="hidden" name="borrower" value="<%= need.id %>">
+                  <input type="number" min="1" name="amount" value="">
+                  <input type="submit" name="submit" value="Lend">
+                </form>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+
+      <h3>List of people you have lent money:</h3>
+      <% if @givens %>
+        <table>
+          <thead>
+            <th>Name</th>
+            <th>Need Money for</th>
+            <th>Reason for Loan</th>
+            <th>Amount Needed</th>
+            <th>Amount Raised</th>
+            <th>Amount Lent</th>
+          </thead>
+          <% @givens.each do |given| %>
+            <tr>
+              <td><%= given.borrower.first_name %> <%= given.borrower.last_name %></td>
+              <td><%= given.borrower.purpose %></td>
+              <td><%= given.borrower.description %></td>
+              <td>$<%= given.borrower.money %></td>
+              <td>$<%= given.borrower.raised %></td>
+              <td>$<%= given.amount %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    <% end %>
+    <% if session[:user] == 'borrower' %>
+      <h3>List of people who have lent you money:</h3>
+      <table>
+        <thead>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Amount Lent</th>
+        </thead>
+        <% if @lendings %>
+          <% @lendings.each do |lend| %>
+            <tr>
+              <td><%= lend.lender.first_name %> <%= lend.lender.last_name %></td>
+              <td><%= lend.lender.email %></td>
+              <td>$<%= lend.amount %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    <% end %>
+  </body>
+</html>

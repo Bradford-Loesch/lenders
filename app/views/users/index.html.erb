@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Registration</title>
+  </head>
+  <body>
+    <h2>Regiester new lender</h2>
+    <form class="newlender" action="/lending/lender/new" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+      <label for="lender[first_name]">First Name: <input type="text" name="lender[first_name]" value=""></label><br>
+      <label for="lender[last_name]">Last Name: <input type="text" name="lender[last_name]" value=""></label><br>
+      <label for="lender[email]">Email: <input type="text" name="lender[email]" value=""></label><br>
+      <label for="lender[password]">Password: <input type="text" name="lender[password]" value=""></label><br>
+      <label for="lender[password_confirmation]">Password Confirmation: <input type="text" name="lender[password_confirmation]" value=""></label><br>
+      <label for="lender[money]">Money: <input type="number" min="1" name="lender[money]" value=""></label><br>
+      <a href="/lending/login">Already a member?</a>
+      <input type="submit" name="submit" value="Register">
+    </form>
+
+    <h2>Register new borrower</h2>
+    <form class="newborrower" action="/lending/borrower/new" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+      <label for="borrower[first_name]">First Name: <input type="text" name="borrower[first_name]" value=""></label><br>
+      <label for="borrower[last_name]">Last Name: <input type="text" name="borrower[last_name]" value=""></label><br>
+      <label for="borrower[email]">Email: <input type="text" name="borrower[email]" value=""></label><br>
+      <label for="borrower[password]">Password: <input type="text" name="borrower[password]" value=""></label><br>
+      <label for="borrower[password_confirmation]">Password Confirmation: <input type="text" name="borrower[password_confirmation]" value=""></label><br>
+      <label for="borrower[purpose]">Need Money For: <input type="text" name="borrower[purpose]" value=""></label><br>
+      <label for="borrower[description]">Description: <input type="text" name="borrower[description]" value=""></label><br>
+      <label for="borrower[money]">Money: <input type="number" min="1" name="borrower[money]" value=""></label><br>
+      <a href="/lending/login">Already a member?</a>
+      <input type="submit" name="submit" value="Register">
+    </form>
+  </body>
+</html>
